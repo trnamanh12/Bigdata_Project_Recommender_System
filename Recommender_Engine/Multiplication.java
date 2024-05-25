@@ -25,7 +25,7 @@ public class Multiplication {
 			//pass data to reducer
 
 			String[] line = value.toString().split('\t');
-			context.write(new Text(line[0]), new Text(line[1]));
+			context.write(new Text(line[0]), new Text(line[1])); // key = movie_2, value = movie_1=relation
 		}
 	}
 
@@ -38,7 +38,7 @@ public class Multiplication {
 			//input: user,movie,rating
 			//pass data to reducer
 			String[] line = value.toString().split(',');
-			context.write(new Text(line[1]), new Text(line[0] + ':' + line[2]));
+			context.write(new Text(line[1]), new Text(line[0] + ':' + line[2])); // key = movie, value = user:rating
 
 		}
 	}
@@ -65,14 +65,17 @@ public class Multiplication {
 				}
 			}
 
-			for(Map.Entry<String, Double> entry: relatoinMap.entrySet()){
+			for(Map.Entry<String, Double> entry: relationMap.entrySet()){
 				String movie = entry.getKey();
 				double relation = entry.getValue();
 
 				for (Map.Entry<String, Double> element: ratingMap.entrySet()){
 					String user = element.getKey();
 					double rating = element.getValue();
-					context.wrtie(new Text(user + ':' + movie), new DoubleWritable(relation*rating));
+					context.wrtie(new Text(user + ':' + movie), new DoubleWritable(relation*rating)); // key = user:movie value = relation*rating
+					// here relation is the number show co the hieu la muc do lien quan giua 2 movies
+					// va vi` rating la diem so ma user rating cho key, con` relation dai dien cho muc do lien quan giua movie va key
+					// nen ta lay relation*rating de sau do sum => rating cho movie do' ( khac voi key)
 				}
 			}
 		}

@@ -26,7 +26,7 @@ public class DataDividerByUser {
 			String rating_score = user_movie_rating[2];
 
 			context.write(new IntWritable(userID), new Text(movieID + ':' + rating_score));
-
+			// data format: key-value pair: key = userID value = movie: rating_score
 		}
 	}
 
@@ -45,8 +45,8 @@ public class DataDividerByUser {
 			}
 			
 			// key-value pair: key = userID value = movie1: rating_score, movie2: rating_score.....
-			context.write(key new Text(strblder.toString().replaceFirst(',', '')));
-
+			context.write(key, new Text(strblder.toString().replaceFirst(',', ' ')));
+			// remove the first comma
 		}
 	}
 

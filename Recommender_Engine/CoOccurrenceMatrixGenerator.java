@@ -21,17 +21,18 @@ public class CoOccurrenceMatrixGenerator {
 			//value = userid \t movie1: rating, movie2: rating...
 			//key = movie1: movie2 value = 1
 			//calculate each user rating list: <movieA, movieB>
-			String line = value.toString().trim()
+			String line = value.toString().trim(); 
 			String[] user_movingratingscore = line.split('\t');
-			String[] movie_ratings = user_movingratingscore[1].split(',');
+			String[] movie_ratings = user_movingratingscore[1].split(','); // movie1: rating, movie2: rating...
 
 			// movie1: rating, movie2: rating...
 			for(int i = 0; i < movie_ratings.length; i++){
-				String movie1 = movie_ratings[i].trim().split(':')[0];
+				String movie1 = movie_ratings[i].trim().split(':')[0]; // movie1[0] = movie1, movie1[1] = rating
 
 				for(int j = 0; i < movie_ratings.length; j++){
 					String movie2 = movie_ratings[j].trim().split(':')[0];
-					context.write(new Text(movie1 + ':' + movie2), new IntWritable(1));
+					context.write(new Text(movie1 + ':' + movie2), new IntWritable(1)); // key = movie1:movie2 value = 1
+					// we have to calculate how many people have watched movie1 and movie2
 				}
 			}
 		}
